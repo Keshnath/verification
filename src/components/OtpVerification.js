@@ -17,6 +17,7 @@ const OtpVerification = ({ otp, handleOnchange, valueLength }) => {
   }, [otp, valueLength]);
 
   const inputOnchange = (e, idx) => {
+    // on change of value and also check the chartype
     const target = e.target;
     let targetValue = target.value;
     const isTargetValueDigit = RE.test(targetValue);
@@ -43,27 +44,28 @@ const OtpVerification = ({ otp, handleOnchange, valueLength }) => {
     }
   };
 
-  const handleOnKeyPress  = (e)=>{
-    const target = e.target
-    const value = target.value
-    if(!e.key === 'Backspace' || value != " "){
-      return 
+  const handleOnKeyPress = (e) => {
+    // removing of items and back focus
+    const target = e.target;
+    const value = target.value;
+    if (!e.key === "Backspace" || value != " ") {
+      return;
     }
-    const previousElementSibling = target.previousElementSibling 
-    if(previousElementSibling){
-      previousElementSibling.focus()
+    const previousElementSibling = target.previousElementSibling;
+    if (previousElementSibling) {
+      previousElementSibling.focus();
     }
-    
-  }
-  const handleOnFocus = (e)=>{
-    
-  }
+  };
+  const handleOnFocus = (e) => {
+    // to change the digits
+    const target = e.target;
+    target.setSelectionRange(0, 1);
+  };
 
   return (
     <div>
       {valueItems.map((e, ind) => (
-        
-          <input
+        <input
           className="border-b border-black w-9 text-center m-2"
           type="text"
           value={e}
@@ -75,11 +77,16 @@ const OtpVerification = ({ otp, handleOnchange, valueLength }) => {
           onKeyDown={handleOnKeyPress}
           onFocus={handleOnFocus}
         />
-        
-        
       ))}
-      <div className="flex justify-between m-6"><h1 className="text-blue-500">Change Number</h1> <h1 className="text-blue-500">Re-send OTP</h1></div>
-      <div><button className="border border-black rounded-full px-7 py-2 bg-green-300">Verify Phone Number</button></div>
+      <div className="flex justify-between m-6">
+        <h1 className="text-blue-500">Change Number</h1>{" "}
+        <h1 className="text-blue-500">Re-send OTP</h1>
+      </div>
+      <div>
+        <button className="border border-black rounded-full px-7 py-2 bg-green-300">
+          Verify Phone Number
+        </button>
+      </div>
     </div>
   );
 };
